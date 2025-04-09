@@ -48,6 +48,8 @@ def adicionar_transacao():
     except Exception as erro:
         messagebox.showerror("Erro", f"Erro ao adicionar: {erro}")
 
+    limpar_campos()
+
 
 def exibir_transacoes():
     tree.delete(*tree.get_children())
@@ -90,6 +92,18 @@ def excluir_transacao():
         exibir_transacoes()
     except Exception as erro:
         messagebox.showerror("Erro", f"Erro ao excluir: {erro}")
+
+
+def limpar_campos():
+    entrada_descricao.delete(0, "end")
+    entrada_valor.delete(0, "end")
+    entrada_data.delete(0, "end")
+    tipo_var.set("Receita")
+    if lista_categorias:
+        categoria_var.set(lista_categorias[0])
+
+    janela.after(100, lambda: entrada_descricao.focus())
+
 
 # ==== Interface Gráfica ====
 
@@ -155,4 +169,6 @@ btn_excluir = ctk.CTkButton(
 btn_excluir.grid(row=8, column=0, columnspan=2, pady=10)
 
 exibir_transacoes()
+janela.after(100, lambda: entrada_descricao.focus())
+
 janela.mainloop()
